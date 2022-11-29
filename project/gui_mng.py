@@ -57,6 +57,57 @@ class NewGame:
 
         self.pieces_left = 9
 
+        # events 1-24
+        self.event_list = []
+        self.place_01_pressed = pygame.USEREVENT + 1
+        self.event_list.append(self.place_01_pressed)
+        self.place_02_pressed = pygame.USEREVENT + 2
+        self.event_list.append(self.place_02_pressed)
+        self.place_03_pressed = pygame.USEREVENT + 3
+        self.event_list.append(self.place_03_pressed)
+        self.place_04_pressed = pygame.USEREVENT + 4
+        self.event_list.append(self.place_04_pressed)
+        self.place_05_pressed = pygame.USEREVENT + 5
+        self.event_list.append(self.place_05_pressed)
+        self.place_06_pressed = pygame.USEREVENT + 6
+        self.event_list.append(self.place_06_pressed)
+        self.place_07_pressed = pygame.USEREVENT + 7
+        self.event_list.append(self.place_07_pressed)
+        self.place_08_pressed = pygame.USEREVENT + 8
+        self.event_list.append(self.place_08_pressed)
+        self.place_09_pressed = pygame.USEREVENT + 9
+        self.event_list.append(self.place_09_pressed)
+        self.place_10_pressed = pygame.USEREVENT + 10
+        self.event_list.append(self.place_10_pressed)
+        self.place_11_pressed = pygame.USEREVENT + 11
+        self.event_list.append(self.place_11_pressed)
+        self.place_12_pressed = pygame.USEREVENT + 12
+        self.event_list.append(self.place_12_pressed)
+        self.place_13_pressed = pygame.USEREVENT + 13
+        self.event_list.append(self.place_13_pressed)
+        self.place_14_pressed = pygame.USEREVENT + 14
+        self.event_list.append(self.place_14_pressed)
+        self.place_15_pressed = pygame.USEREVENT + 15
+        self.event_list.append(self.place_15_pressed)
+        self.place_16_pressed = pygame.USEREVENT + 16
+        self.event_list.append(self.place_16_pressed)
+        self.place_17_pressed = pygame.USEREVENT + 17
+        self.event_list.append(self.place_17_pressed)
+        self.place_18_pressed = pygame.USEREVENT + 18
+        self.event_list.append(self.place_18_pressed)
+        self.place_19_pressed = pygame.USEREVENT + 19
+        self.event_list.append(self.place_19_pressed)
+        self.place_20_pressed = pygame.USEREVENT + 20
+        self.event_list.append(self.place_20_pressed)
+        self.place_21_pressed = pygame.USEREVENT + 21
+        self.event_list.append(self.place_21_pressed)
+        self.place_22_pressed = pygame.USEREVENT + 22
+        self.event_list.append(self.place_22_pressed)
+        self.place_23_pressed = pygame.USEREVENT + 23
+        self.event_list.append(self.place_23_pressed)
+        self.place_24_pressed = pygame.USEREVENT + 24
+        self.event_list.append(self.place_24_pressed)
+
     def draw_circles(self):
         # for i in range(len(self.BUTTON_X_POSITIONS)):
         #     pygame.draw.circle(
@@ -95,6 +146,14 @@ class NewGame:
 
         self.update_after_any_change()       # update after a change
 
+    # def draw_winner(self, text):
+    #     draw_text = self.WINNER_FONT.render(text, True, self.WINDOW_COLOR2)
+    #     self.window.blit(draw_text,
+    #                      (self.WIDTH//2 - draw_text.get_width()//2,
+    #                       self.HEIGHT//2 - draw_text.get_height()//2))
+    #     self.update_after_any_change()  # update after a change
+    #     pygame.time.delay(3000)
+
     # main loop
     def run_game(self):
         run = True
@@ -113,12 +172,21 @@ class NewGame:
                 #
                 #     print(self.RECTANGLE_LIST)
 
+                # movement
+                # key_pressed = pygame.key.get_pressed()  # get pressed keys
+                # self.movement(key_pressed)  # pass to movement method
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     m_x, m_y = pygame.mouse.get_pos()
                     print(m_x, m_y)
                     for i in range(len(self.RECTANGLE_LIST)):
                         if self.RECTANGLE_LIST[i].collidepoint(m_x, m_y):
                             print(f"Rect: " + str(i))
+                            pygame.event.post(pygame.event.Event(self.event_list[i+1]))
+
+                if event.type == self.event_list[3]:
+                    print("3333333")
+                    self.PLACE_SOUND.play()
 
                     print(self.RECTANGLE_LIST)
 
