@@ -1,5 +1,6 @@
 import pygame
 import os
+import gui_support
 pygame.font.init()   # enable the fonts
 pygame.mixer.init()  # enable sounds
 
@@ -30,7 +31,14 @@ class NewGame:
     GREEN_PIECE_IMAGE = pygame.image.load(os.path.join('assets', 'green.png'))
     BLUE_PIECE_IMAGE = pygame.image.load(os.path.join('assets', 'blue.png'))
     BACKGROUND = pygame.image.load(os.path.join('assets', 'background.jpg'))
+
     BOARD = pygame.image.load(os.path.join('assets', 'board.png'))
+    BUTTON_RADIUS = 20
+    LINE_THICKNESS = 3
+    BUTTON_X_POSITIONS = gui_support.BUTTON_X_POSITIONS
+    BUTTON_Y_POSITIONS = gui_support.BUTTON_Y_POSITIONS
+
+    RECTANGLE_LIST = []
 
     def __init__(self):
         self.window = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
@@ -49,6 +57,20 @@ class NewGame:
 
         self.pieces_left = 9
 
+    def draw_circles(self):
+        # for i in range(len(self.BUTTON_X_POSITIONS)):
+        #     pygame.draw.circle(
+        #         self.window, self.BLACK_COLOR,
+        #         (self.BUTTON_X_POSITIONS[i], self.BUTTON_Y_POSITIONS[i]),
+        #         self.BUTTON_RADIUS, self.LINE_THICKNESS)
+        self.RECTANGLE_LIST.clear()
+        for i in range(len(self.BUTTON_X_POSITIONS)):
+            rectangle = pygame.Rect(self.BUTTON_X_POSITIONS[i],
+                                        self.BUTTON_Y_POSITIONS[i],
+                                        20, 20)
+            self.RECTANGLE_LIST.append(rectangle)
+            pygame.draw.rect(self.window, self.GREY_COLOR, rectangle)
+
     @staticmethod
     def update_after_any_change():
         pygame.display.update()
@@ -66,6 +88,8 @@ class NewGame:
 
         self.window.blit(self.board, (100, 100))
 
+        self.draw_circles()
+
         self.window.blit(self.green_piece, (100, 100))  # always draw after filling the screen
         self.window.blit(self.blue_piece, (300, 300))
 
@@ -82,6 +106,21 @@ class NewGame:
                 if event.type == pygame.QUIT:
                     run = False
                     pygame.quit()   # when we press the x it will actually close the game
+
+                # if event.type == pygame.MOUSEBUTTONDOWN:
+                #     m_x, m_y = pygame.mouse.get_pos()
+                #     print(m_x, m_y)
+                #
+                #     print(self.RECTANGLE_LIST)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    m_x, m_y = pygame.mouse.get_pos()
+                    print(m_x, m_y)
+                    for i in range(len(self.RECTANGLE_LIST)):
+                        if self.RECTANGLE_LIST[i].collidepoint(m_x, m_y):
+                            print(f"Rect: " + str(i))
+
+                    print(self.RECTANGLE_LIST)
 
             self.draw_window()  # update window and pieces' position
 
