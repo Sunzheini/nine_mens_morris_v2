@@ -1,9 +1,9 @@
-from project.gui_mng import NewGame
+from project.gui_mng import NewGui
 
 
 def main_loop():
-    new_game = NewGame()
-    new_game.run_game()
+    new_gui = NewGui()
+    new_gui.run_game()
 
 
 if __name__ == '__main__':
